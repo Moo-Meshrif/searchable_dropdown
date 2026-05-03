@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
@@ -26,7 +25,7 @@ class ExampleNumber {
   };
 
   String get numberString {
-    return (map.containsKey(number) ? map[number] : "unknown");
+    return (map[number] ?? "unknown");
   }
 
   ExampleNumber(this.number);
@@ -51,9 +50,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool asTabs = false;
-  String selectedValue;
+  String? selectedValue;
   String preselectedValue = "dolor sit";
-  ExampleNumber selectedNumber;
+  ExampleNumber? selectedNumber;
   List<int> selectedItems = [];
   final List<DropdownMenuItem> items = [];
 
@@ -217,18 +216,18 @@ class _MyAppState extends State<MyApp> {
                   ))));
         },
         doneButton: (selectedItemsDone, doneContext) {
-          return (RaisedButton(
+          return (ElevatedButton(
               onPressed: () {
                 Navigator.pop(doneContext);
                 setState(() {});
               },
-              child: Text("Save")));
+              child: const Text("Save")));
         },
         closeButton: null,
         style: TextStyle(fontStyle: FontStyle.italic),
         searchFn: (String keyword, items) {
-          List<int> ret = List<int>();
-          if (keyword != null && items != null && keyword.isNotEmpty) {
+          List<int> ret = [];
+          if (items != null && keyword.isNotEmpty) {
             keyword.split(" ").forEach((k) {
               int i = 0;
               items.forEach((item) {
@@ -278,14 +277,14 @@ class _MyAppState extends State<MyApp> {
           });
         },
         doneButton: (selectedItemsDone, doneContext) {
-          return (RaisedButton(
+          return (ElevatedButton(
               onPressed: selectedItemsDone.length != 3
                   ? null
                   : () {
                       Navigator.pop(doneContext);
                       setState(() {});
                     },
-              child: Text("Save")));
+              child: const Text("Save")));
         },
         closeButton: (selectedItems) {
           return (selectedItems.length == 3 ? "Ok" : null);
@@ -337,7 +336,7 @@ class _MyAppState extends State<MyApp> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                   onPressed: () {
                     setState(() {
                       selectedItems.clear();
@@ -345,14 +344,14 @@ class _MyAppState extends State<MyApp> {
                           Iterable<int>.generate(items.length).toList());
                     });
                   },
-                  child: Text("Select all")),
-              RaisedButton(
+                  child: const Text("Select all")),
+              ElevatedButton(
                   onPressed: () {
                     setState(() {
                       selectedItems.clear();
                     });
                   },
-                  child: Text("Select none")),
+                  child: const Text("Select none")),
             ],
           );
         },
@@ -375,7 +374,7 @@ class _MyAppState extends State<MyApp> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                   onPressed: () {
                     setState(() {
                       selectedItems.clear();
@@ -383,14 +382,14 @@ class _MyAppState extends State<MyApp> {
                           Iterable<int>.generate(items.length).toList());
                     });
                   },
-                  child: Text("Select all")),
-              RaisedButton(
+                  child: const Text("Select all")),
+              ElevatedButton(
                   onPressed: () {
                     setState(() {
                       selectedItems.clear();
                     });
                   },
-                  child: Text("Select none")),
+                  child: const Text("Select none")),
             ],
           );
         },
